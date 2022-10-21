@@ -1,5 +1,8 @@
+#![cfg_attr(not(feature = "std"), no_std)]
+
+use alloc::{str, str::FromStr};
 use ethereum_types::{BigEndianHash, H160, H256, U256, U512};
-use std::str::{self, FromStr};
+use hex_literal::hex;
 
 /// decode chunk into string (it is right padded with zeros)
 pub fn chunk_to_str(src: U256) -> anyhow::Result<String> {
@@ -51,8 +54,7 @@ pub fn str_to_date(src: &str) -> Option<(i32, u32, u32)> {
 /// decode chunk into signed integer
 pub fn chunk_to_int(src: U256) -> (U256, i32) {
     if src.bit(32 * 8 - 1) {
-        let a = U512::from_str("10000000000000000000000000000000000000000000000000000000000000000")
-            .unwrap()
+        let a = U512::from(hex!("10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"))
             - U256::from(src);
         let U512(ref arr) = a;
         let mut ret = [0; 4];
@@ -109,6 +111,7 @@ mod tests {
     use super::*;
     use ethereum_types::U256;
     use hex_literal::hex;
+    use std::str::FromStr;
 
     #[test]
     fn it_can_decode_ascii_str() {

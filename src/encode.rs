@@ -1,12 +1,14 @@
+#![cfg_attr(not(feature = "std"), no_std)]
+
 use ethereum_types::{H160, U256, U512};
-use std::convert::TryInto;
-use std::str::FromStr;
+use hex_literal::hex;
 
 /// converts array of bytes into fixed array of 32 or panic
 /// Fix of the size must be at compile time! use carefully, this function panics.
 pub fn into32(src: &[u8]) -> [u8; 32] {
-    src.try_into()
-        .expect(format!("slice with incorrect length of {}", src.len()).as_str())
+    assert!(src.len() == 32);
+    let ptr = src.as_ptr() as *const [u8; 32];
+    unsafe { *ptr }
 }
 
 /// converts array of bytes into vector, padded by 32 bytes with 0 at the end
@@ -98,9 +100,8 @@ pub fn int_chunk(src: U256, sign: i32) -> U256 {
     if sign == 1 {
         U256::from(src)
     } else {
-        let a = U512::from_str("10000000000000000000000000000000000000000000000000000000000000000")
-            .unwrap()
-            - U256::from(src);
+        let a = U512::from(hex!("10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000")) 
+        - U512::from(src);
         let U512(ref arr) = a;
         let mut ret = [0; 4];
         ret[0] = arr[0];
