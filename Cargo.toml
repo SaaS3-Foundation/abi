@@ -1,0 +1,37 @@
+[package]
+name = "abi"
+version = "0.1.0"
+authors = ["tianyi@saas3.io"]
+edition = "2018"
+license = "MIT"
+description = "SaaS3 dRuntime ABI encoder/decoder"
+readme = "README.md"
+
+[badges]
+maintenance = { status = "actively-developed" }
+
+[dependencies]
+anyhow = { verison = "1.0.0", default-features = false }
+hex = { version = "0.4", default-features = false, features = ["alloc"] }
+hex-literal = { version = "0.3", default-features = false }
+serde = { version = "1.0", default-features = false, features = ["derive"]}
+serde-json-core = { version = "0.4.0", default-features = false }
+ethereum-types = { version = "0.13.1", default-features = false}
+thiserror = { version = "1.0", default-features = false, optional = true }
+
+[dev-dependencies]
+rand = "0.8"
+
+[features]
+default = [
+	"std",
+]
+std = [
+	"hex/std",
+	"serde/std",
+	"ethereum-types/std",
+	"thiserror",
+    "serde-json-core/std",
+]
+
+
