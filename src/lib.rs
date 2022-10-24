@@ -40,7 +40,7 @@
 //! }
 //! ```
 //! Please see more examples for each type of the parameter in unit tests.
-#![cfg_attr(not(test), no_std)]
+#![cfg_attr(not(feature = "std"), no_std)]
 
 #[macro_use]
 extern crate alloc;
