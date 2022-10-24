@@ -43,6 +43,9 @@ fn main() {
 ```
 Please see more examples for each type of the parameter in unit tests.
 
+### Contribute
+Run `cargo +nightly  no-std-check --manifest-path Cargo.toml` when you introduce new deps
+
 
 ### License
 MIT

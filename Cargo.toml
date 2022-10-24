@@ -23,16 +23,3 @@ path = "src/lib.rs"
 
 [dev-dependencies]
 rand = { version = "0.8" }
-
-[features]
-default = [
-	"std",
-]
-std = [
-	"hex/std",
-	"primitive-types/std",
-	"anyhow/std",
-	"rand/std",
-]
-
-

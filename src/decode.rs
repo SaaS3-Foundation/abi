@@ -1,4 +1,4 @@
-use alloc::{str, str::FromStr, string::String, string::ToString, vec::Vec};
+use alloc::{str, string::String, string::ToString, vec::Vec};
 use hex_literal::hex;
 use primitive_types::{H160, H256, U256, U512};
 
@@ -67,19 +67,37 @@ pub fn chunk_to_int(src: U256) -> (U256, i32) {
 
 /// decode chunk into EVM address hash
 pub fn chunk_to_address(src: U256) -> H160 {
-    let mut s = String::from("");
     let mut i = 19;
-    // compile a string of 20-byte hex value
+    let mut bytes = vec![];
     loop {
         let b = src.byte(i);
-        s.push_str(format!("{:02x}", b).as_str());
+        bytes.push(b);
         if i == 0 {
             break;
         }
         i -= 1;
     }
-    H160::from_str(&s).unwrap()
+    H160::from_slice(&bytes.as_slice())
 }
+//pub fn chunk_to_address(src: U256) -> H160 {
+//    let mut s = String::from("");
+//    let mut i = 19;
+//
+//    // compile a string of 20-byte hex value
+//    loop {
+//        let b = src.byte(i);
+//        s.push_str(format!("{:02x}", b).as_str());
+//        if i == 0 {
+//            break;
+//        }
+//        i -= 1;
+//    }
+//    println!("s: {}", s);
+//    let t = H160::from_str(&s).unwrap();
+//    println!("t: {:?}", t);
+//    t
+//    //H160::from_slice(s.as_str().as_bytes())
+//}
 
 /// decode chunk into vector of bytes
 pub fn chunk_to_vec(arr: &Vec<U256>, offset: usize, sz: usize) -> Vec<u8> {
@@ -107,9 +125,9 @@ pub fn chunk_to_vec(arr: &Vec<U256>, offset: usize, sz: usize) -> Vec<u8> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use alloc::str::FromStr;
     use hex_literal::hex;
     use primitive_types::U256;
-    use alloc::str::FromStr;
 
     #[test]
     fn it_can_decode_ascii_str() {
