@@ -542,7 +542,6 @@ mod tests {
     use hex_literal::hex;
     use primitive_types::{H160, U256};
     use rand::{thread_rng, Rng};
-
     fn rand_str() -> String {
         thread_rng()
             .sample_iter(&rand::distributions::Alphanumeric)
