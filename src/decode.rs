@@ -1,6 +1,6 @@
 use alloc::{str, str::FromStr, string::String, string::ToString, vec::Vec};
-use ethereum_types::{BigEndianHash, H160, H256, U256, U512};
 use hex_literal::hex;
+use primitive_types::{H160, H256, U256, U512};
 
 /// decode chunk into string (it is right padded with zeros)
 pub fn chunk_to_str(src: U256) -> anyhow::Result<String> {
@@ -22,7 +22,7 @@ pub fn chunk_to_str(src: U256) -> anyhow::Result<String> {
         Err(e) => Err(anyhow::Error::msg(format!(
             "{} in chunk {:?}",
             e,
-            H256::from_uint(&src)
+            H256::from(&src.into())
         ))),
     }
 }

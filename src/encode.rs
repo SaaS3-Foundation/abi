@@ -1,6 +1,6 @@
 use alloc::vec::Vec;
-use ethereum_types::{H160, U256, U512};
 use hex_literal::hex;
+use primitive_types::{H160, U256, U512};
 
 /// converts array of bytes into fixed array of 32 or panic
 /// Fix of the size must be at compile time! use carefully, this function panics.

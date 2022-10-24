@@ -52,7 +52,7 @@ use alloc::collections::BTreeMap;
 use alloc::{borrow::ToOwned, string::String, vec::Vec};
 use decode::{chunk_to_address, chunk_to_int, chunk_to_str, chunk_to_vec, str_to_date};
 use encode::{address_chunk, chunks, date_chunk, int_chunk, str_chunk32, str_chunks};
-use ethereum_types::{H160, U256};
+use primitive_types::{H160, U256};
 use serde::{Deserialize, Serialize};
 use thiserror_no_std::Error;
 
