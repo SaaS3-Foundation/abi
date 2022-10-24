@@ -40,7 +40,8 @@
 //! }
 //! ```
 //! Please see more examples for each type of the parameter in unit tests.
-#![cfg_attr(not(feature = "std"), no_std)]
+//#![cfg_attr(not(feature = "std"), no_std)]
+#![no_std]
 
 #[macro_use]
 extern crate alloc;
@@ -53,10 +54,9 @@ use alloc::{borrow::ToOwned, string::String, vec::Vec};
 use decode::{chunk_to_address, chunk_to_int, chunk_to_str, chunk_to_vec, str_to_date};
 use encode::{address_chunk, chunks, date_chunk, int_chunk, str_chunk32, str_chunks};
 use primitive_types::{H160, U256};
-use serde::{Deserialize, Serialize};
 use thiserror_no_std::Error;
 
-#[derive(Debug, Error, Serialize)]
+#[derive(Debug, Error)]
 pub enum EncodingError {
     #[error("too many parameters, max is 31")]
     TooManyParams,
@@ -70,7 +70,7 @@ pub enum EncodingError {
     InvalidDay,
 }
 
-#[derive(Debug, Clone, Error, Serialize, Deserialize)]
+#[derive(Debug, Clone, Error)]
 pub enum DecodingError {
     #[error("no input")]
     NoInput,
@@ -660,7 +660,6 @@ mod tests {
         let value = ABI::none().encode().unwrap();
         let expected: U256 =
             hex!("3100000000000000000000000000000000000000000000000000000000000000").into();
-        println!("expected is {:?}", expected);
         assert_eq!(value, vec![expected]);
     }
 

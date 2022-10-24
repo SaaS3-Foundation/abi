@@ -109,7 +109,7 @@ mod tests {
     use super::*;
     use hex_literal::hex;
     use primitive_types::U256;
-    use std::str::FromStr;
+    use alloc::str::FromStr;
 
     #[test]
     fn it_can_decode_ascii_str() {
