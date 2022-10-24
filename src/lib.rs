@@ -40,20 +40,21 @@
 //! }
 //! ```
 //! Please see more examples for each type of the parameter in unit tests.
-#![cfg_attr(not(feature = "std"), no_std)]
+#![cfg_attr(not(test), no_std)]
+
+#[macro_use]
+extern crate alloc;
 
 mod decode;
 mod encode;
 
-extern crate alloc;
-
 use alloc::collections::BTreeMap;
-use alloc::{string::String, vec::Vec};
+use alloc::{borrow::ToOwned, string::String, vec::Vec};
 use decode::{chunk_to_address, chunk_to_int, chunk_to_str, chunk_to_vec, str_to_date};
 use encode::{address_chunk, chunks, date_chunk, int_chunk, str_chunk32, str_chunks};
 use ethereum_types::{H160, U256};
 use serde::{Deserialize, Serialize};
-use thiserror::Error;
+use thiserror_no_std::Error;
 
 #[derive(Debug, Error, Serialize)]
 pub enum EncodingError {
@@ -75,24 +76,24 @@ pub enum DecodingError {
     NoInput,
     #[error("schema is missing")]
     NoSchema,
-    #[error("invalid schema {0}")]
-    InvalidSchema(String),
+    #[error("invalid schema")]
+    InvalidSchema,
     #[error("schema version is invalid")]
     InvalidVersion,
     #[error("invalid schema character {0}")]
     InvalidSchemaCharacter(char),
-    #[error("invalid schema chunk string {0}")]
-    InvalidSchemaChunkString(String),
-    #[error("invalid name chunk string {0}")]
-    InvalidNameChunkString(String),
-    #[error("invalid bool chunk {0}")]
-    InvalidBoolChunk(String),
-    #[error("invalid chunk string {0}")]
-    InvalidChunkString(String),
-    #[error("invalid UTF-8 string {0}")]
-    InvalidUtf8String(String),
-    #[error("invalid bool {0}")]
-    InvalidBool(String),
+    #[error("invalid schema chunk string")]
+    InvalidSchemaChunkString,
+    #[error("invalid name chunk string")]
+    InvalidNameChunkString,
+    #[error("invalid bool chunk")]
+    InvalidBoolChunk,
+    #[error("invalid chunk string")]
+    InvalidChunkString,
+    #[error("invalid UTF-8 string")]
+    InvalidUtf8String,
+    #[error("invalid bool")]
+    InvalidBool,
 }
 
 /// Atomic parameter in the SaaS3 protocol ABI
@@ -394,7 +395,7 @@ impl ABI {
     ) -> Result<Self, DecodingError> {
         let schema_chunk = match str_chunk32(&schema) {
             Ok(x) => x,
-            Err(e) => return Err(DecodingError::InvalidSchema(e.to_string())),
+            Err(_e) => return Err(DecodingError::InvalidSchema),
         };
         let input: Vec<U256> = vec![schema_chunk]
             .into_iter()
@@ -416,7 +417,7 @@ impl ABI {
 
         let schema: String = match chunk_to_str(*schema_chunk) {
             Ok(x) => x,
-            Err(e) => return Err(DecodingError::InvalidSchemaChunkString(format!("{}", e))),
+            Err(_e) => return Err(DecodingError::InvalidSchemaChunkString),
         };
 
         let mut params: Vec<Param> = vec![];
@@ -454,7 +455,7 @@ impl ABI {
     ) -> Result<Param, DecodingError> {
         let name: String = match chunk_to_str(arr[*offset]) {
             Ok(x) => x,
-            Err(e) => return Err(DecodingError::InvalidNameChunkString(format!("{}", e))),
+            Err(_e) => return Err(DecodingError::InvalidNameChunkString),
         };
         *offset += 1;
         if ch == 'b' {
@@ -490,10 +491,10 @@ impl ABI {
                     } else if v == "false" {
                         return Ok(Param::Bool { name, value: false });
                     }
-                    return Err(DecodingError::InvalidBool(v));
+                    return Err(DecodingError::InvalidBool);
                 }
-                Err(e) => {
-                    return Err(DecodingError::InvalidBoolChunk(format!("{}", e)));
+                Err(_e) => {
+                    return Err(DecodingError::InvalidBoolChunk);
                 }
             };
         } else if ch == 'u' {
@@ -513,7 +514,7 @@ impl ABI {
             *offset += 1;
             match chunk_to_str(value) {
                 Ok(s) => return Ok(Param::String32 { name, value: s }),
-                Err(e) => return Err(DecodingError::InvalidChunkString(format!("{}", e))),
+                Err(_e) => return Err(DecodingError::InvalidChunkString),
             };
         } else if ch == 'B' || ch == 'S' {
             let value_index: usize = arr[*offset].as_usize(); // todo: handle failure
@@ -526,7 +527,7 @@ impl ABI {
             }
             let s = match String::from_utf8(value) {
                 Ok(s) => s,
-                Err(e) => return Err(DecodingError::InvalidUtf8String(format!("{}", e))),
+                Err(_e) => return Err(DecodingError::InvalidUtf8String),
             };
             return Ok(Param::String { name, value: s });
         }

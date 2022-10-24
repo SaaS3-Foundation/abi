@@ -1,5 +1,4 @@
-#![cfg_attr(not(feature = "std"), no_std)]
-
+use alloc::vec::Vec;
 use ethereum_types::{H160, U256, U512};
 use hex_literal::hex;
 
@@ -63,7 +62,6 @@ pub fn date_chunk(year: i32, month: u32, day: u32) -> Result<U256, crate::Encodi
         return Err(crate::EncodingError::InvalidDay);
     }
     let s = format!("{:04}-{:02}-{:02}", year, month, day);
-    println!("date_chunk={}", &s);
     str_chunk32(&s)
 }
 

@@ -1,6 +1,4 @@
-#![cfg_attr(not(feature = "std"), no_std)]
-
-use alloc::{str, str::FromStr};
+use alloc::{str, str::FromStr, string::String, string::ToString, vec::Vec};
 use ethereum_types::{BigEndianHash, H160, H256, U256, U512};
 use hex_literal::hex;
 
