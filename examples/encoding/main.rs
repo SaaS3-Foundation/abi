@@ -1,14 +1,15 @@
 use abi::{Param, ABI};
-use ethereum_types::U256;
+use primitive_types::U256;
 
 fn main() {
+    // http://coingecko.com/en/api/simple/price?ids=ethereum&vs_currencies=usd
     let params = vec![
         Param::String32 {
-            name: "coinIds".to_owned(),
+            name: "ids".to_owned(),
             value: "ethereum".to_owned(),
         },
         Param::String32 {
-            name: "coinVs_currencies".to_owned(),
+            name: "vs_currencies".to_owned(),
             value: "usd".to_owned(),
         },
     ];

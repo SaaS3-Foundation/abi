@@ -13,7 +13,7 @@ that are actually represented as `Bytes32` on a protocol level.
 ### decoding example
 ```
 use abi::ABI;
-use ethereum_types::U256;
+use primitive_types::U256;
 use hex_literal::hex;
 
 fn main() {
@@ -30,7 +30,7 @@ fn main() {
 ### encoding example
 ```
 use abi::{ABI, Param};
-use ethereum_types::U256;
+use primitive_types::U256;
 
 fn main() {
     let param = Param::String {

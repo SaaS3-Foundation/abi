@@ -107,8 +107,8 @@ pub fn chunk_to_vec(arr: &Vec<U256>, offset: usize, sz: usize) -> Vec<u8> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use ethereum_types::U256;
     use hex_literal::hex;
+    use primitive_types::U256;
     use std::str::FromStr;
 
     #[test]

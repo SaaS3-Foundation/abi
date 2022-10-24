@@ -11,7 +11,7 @@
 //! ### decoding example
 //! ```
 //! use abi::ABI;
-//! use ethereum_types::U256;
+//! use primitive_types::U256;
 //! use hex_literal::hex;
 //!
 //! fn main() {
@@ -28,7 +28,7 @@
 //! ### encoding example
 //! ```
 //! use abi::{ABI, Param};
-//! use ethereum_types::U256;
+//! use primitive_types::U256;
 //!
 //! fn main() {
 //!     let param = Param::String {
@@ -539,8 +539,8 @@ impl ABI {
 mod tests {
     use super::*;
     use encode::into32;
-    use ethereum_types::{H160, U256};
     use hex_literal::hex;
+    use primitive_types::{H160, U256};
     use rand::{thread_rng, Rng};
 
     fn rand_str() -> String {

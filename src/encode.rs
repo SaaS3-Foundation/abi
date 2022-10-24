@@ -118,8 +118,8 @@ pub fn address_chunk(src: H160) -> U256 {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use ethereum_types::U256;
     use hex_literal::hex;
+    use primitive_types::U256;
 
     #[test]
     fn it_can_encode_negative_int256() {

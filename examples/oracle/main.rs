@@ -1,6 +1,6 @@
 use abi::ABI;
-use ethereum_types::U256;
 use hex_literal::hex;
+use primitive_types::U256;
 
 fn main() {
     let data: Vec<U256> = vec![
