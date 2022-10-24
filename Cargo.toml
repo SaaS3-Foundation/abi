@@ -26,15 +26,15 @@ path = "src/lib.rs"
 [dev-dependencies]
 rand = "0.8"
 
-##[features]
-##default = [
-##	"std",
-##]
-##std = [
-##	"hex/std",
-##	"serde/std",
-##	"ethereum-types/std",
-##    "serde-json-core/std",
-##]
+[features]
+default = [
+	"std",
+]
+std = [
+	"hex/std",
+	"serde/std",
+	"ethereum-types/std",
+    "serde-json-core/std",
+]
 
 
