@@ -79,25 +79,6 @@ pub fn chunk_to_address(src: U256) -> H160 {
     }
     H160::from_slice(&bytes.as_slice())
 }
-//pub fn chunk_to_address(src: U256) -> H160 {
-//    let mut s = String::from("");
-//    let mut i = 19;
-//
-//    // compile a string of 20-byte hex value
-//    loop {
-//        let b = src.byte(i);
-//        s.push_str(format!("{:02x}", b).as_str());
-//        if i == 0 {
-//            break;
-//        }
-//        i -= 1;
-//    }
-//    println!("s: {}", s);
-//    let t = H160::from_str(&s).unwrap();
-//    println!("t: {:?}", t);
-//    t
-//    //H160::from_slice(s.as_str().as_bytes())
-//}
 
 /// decode chunk into vector of bytes
 pub fn chunk_to_vec(arr: &Vec<U256>, offset: usize, sz: usize) -> Vec<u8> {

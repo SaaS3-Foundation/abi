@@ -404,6 +404,16 @@ impl ABI {
         Self::decode(&input, strict)
     }
 
+    pub fn decode_from_slice(input: &[u8], strict: bool) -> Result<Self, DecodingError> {
+        let mut data: Vec<U256> = vec![];
+        for i in 0..input.len() / 32 {
+            let mut chunk = [0u8; 32];
+            chunk.copy_from_slice(&input[i * 32..(i + 1) * 32]);
+            data.push(U256::from(chunk));
+        }
+        Self::decode(&data, strict)
+    }
+
     /// decodes ABI from the vector or 256 bit values
     pub fn decode(input: &Vec<U256>, strict: bool) -> Result<Self, DecodingError> {
         if input.len() < 1 {
