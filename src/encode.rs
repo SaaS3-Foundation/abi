@@ -32,6 +32,16 @@ pub fn str_chunk32(src: &str) -> Result<U256, crate::EncodingError> {
     Ok(U256::from(into32(&out)))
 }
 
+/// convert string less than 31 characters long.
+/// string is padded with 0 to the right.
+pub fn str_chunk32_bytes(src: &str) -> Result<Vec<u8>, crate::EncodingError> {
+    if src.len() > 32 {
+        return Err(crate::EncodingError::StringTooLong);
+    }
+    let out = rpad32(src.as_bytes());
+    Ok(out)
+}
+
 fn is_leap_year(year: i32) -> bool {
     return (year % 4 == 0) && (year % 100 != 0 || year % 400 == 0);
 }

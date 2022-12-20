@@ -1,3 +1,4 @@
+use abi::encode::str_chunk32;
 use abi::ABI;
 use hex_literal::hex;
 use primitive_types::U256;
@@ -9,5 +10,6 @@ fn main() {
         hex!("536f6d6520627974657333322076616c75650000000000000000000000000000").into(),
     ];
     let res: ABI = ABI::decode(&data, true).unwrap();
+    str_chunk32("TestBytes32Name").unwrap();
     println!("{:#?}", res);
 }

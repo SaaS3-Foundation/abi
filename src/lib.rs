@@ -46,8 +46,8 @@
 #[macro_use]
 extern crate alloc;
 
-mod decode;
-mod encode;
+pub mod decode;
+pub mod encode;
 
 use alloc::collections::BTreeMap;
 use alloc::{borrow::ToOwned, string::String, vec::Vec};
@@ -131,6 +131,12 @@ pub enum Param {
 }
 
 impl Param {
+    pub fn new(name: &str, value: &str) -> Self {
+        Param::String {
+            name: name.to_owned(),
+            value: value.to_owned(),
+        }
+    }
     /// returns name of the parameter
     pub fn get_name(&self) -> &str {
         match &self {
